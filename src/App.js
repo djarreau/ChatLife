@@ -8,21 +8,13 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 
 firebase.initializeApp({
-  // apiKey: "AIzaSyDttUCHGuifEaBG6CObQGyxuX3APQeBm6A",
-  // authDomain: "cheemin-11db0.firebaseapp.com",
-  // databaseURL: "https://cheemin-11db0.firebaseio.com",
-  // projectId: "cheemin-11db0",
-  // storageBucket: "cheemin-11db0.appspot.com",
-  // messagingSenderId: "1055419106126",
-  // appId: "1:1055419106126:web:0f4093521eaa05359c141f",
-  // // measurementId: "G-N2HWTWN57Q"
-  apiKey: "AIzaSyCfVXw04AojcXMcEKUTM1LKFepGFqkvTdA",
-    authDomain: "chatlife-f8269.firebaseapp.com",
-    databaseURL: "https://chatlife-f8269.firebaseio.com",
-    projectId: "chatlife-f8269",
-    storageBucket: "chatlife-f8269.appspot.com",
-    messagingSenderId: "207828252640",
-    appId: "1:207828252640:web:835a0f579590b010201d85"
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_DATABASE_URL,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID
 })
 
 const auth = firebase.auth();
@@ -47,7 +39,7 @@ function App() {
 }
 
 function SignIn() {
-  const [user] = useAuthState(auth);
+
   const signInWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider);
@@ -114,10 +106,10 @@ function ChatMessage(props) {
 
   return (
     <div className={`message ${messageClass}`}>
-      <img src={AppIcon} alt={"User Pic"}/>
+      <img src={AppIcon} alt={auth.currentUser.displayName}/>
       <p>{text}</p>
     </div>
-  
   )
 }
+
 export default App;
